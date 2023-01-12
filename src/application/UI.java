@@ -1,5 +1,6 @@
 package application;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import chess.ChessPiece;
@@ -29,14 +30,20 @@ public class UI {
 	public static final String ANSI_CYAN_BACKGROUND = "\u001B[46m";
 	public static final String ANSI_WHITE_BACKGROUND = "\u001B[47m";
 
+	public static void clearScreen() {
+		System.out.println("\033[H\033[2J");
+		System.out.flush();
+	}
+	
 	public static ChessPosition readChessPosition(Scanner sc) {
 		try {
 			String s = sc.nextLine();
 			char column = s.charAt(0);
 			int row = Integer.parseInt(s.substring(1));
 			return new ChessPosition(column, row);
-		} catch (RuntimeException e) {
-			throw new RuntimeException("Error reading Chess Position. Valid values are from a1 to h8.");
+		} 
+		catch (RuntimeException e) {
+			throw new InputMismatchException("Error reading Chess Position. Valid values are from a1 to h8.");
 		}
 	}
 
